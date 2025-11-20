@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS PlanEstudio(
 DROP TABLE IF EXISTS Materia;
 CREATE TABLE IF NOT EXISTS Materia(
   idMateria INT NOT NULL PRIMARY KEY,
-  nomMateria VARCHAR(45) NOT NULL,
+  nomMateria VARCHAR(100) NOT NULL,
   numCreditos INT
 );
 
