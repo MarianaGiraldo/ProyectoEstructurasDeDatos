@@ -25,7 +25,7 @@ public class PlanEstudio {
 
     public PlanEstudio(String nomPlan) { 
         this.nomPlan = nomPlan; 
-        }
+    }
 
     // getters y setters
     public Integer getIdPlan() { 

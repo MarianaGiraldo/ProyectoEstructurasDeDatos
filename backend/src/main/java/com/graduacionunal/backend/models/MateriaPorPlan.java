@@ -39,15 +39,19 @@ public class MateriaPorPlan {
     public void setId(MateriaPorPlanId id) { 
         this.id = id; 
     }
+
     public PlanEstudio getPlanEstudio() { 
         return planEstudio; 
     }
+
     public void setPlanEstudio(PlanEstudio planEstudio) { 
         this.planEstudio = planEstudio; 
     }
+
     public Materia getMateria() { 
         return materia; 
     }
+    
     public void setMateria(Materia materia) { 
         this.materia = materia; 
     }
