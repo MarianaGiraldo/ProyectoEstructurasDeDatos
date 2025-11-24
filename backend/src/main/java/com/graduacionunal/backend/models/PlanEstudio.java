@@ -20,6 +20,7 @@ public class PlanEstudio {
     @OneToMany(mappedBy = "planEstudio", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<MateriaPorPlan> materiasPorPlan = new HashSet<>();
 
+    //Construtores
     public PlanEstudio() {
     }
 
