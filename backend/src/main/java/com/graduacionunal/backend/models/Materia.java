@@ -10,13 +10,12 @@ public class Materia {
 
     //Campos de la tabla
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idMateria;
 
-    @Column(name = "nomMateria", length = 45, nullable = false)
+    @Column(name = "nomMateria", length = 100, nullable = false)
     private String nomMateria;
 
-    @Column(name = "numCreditos")
+    @Column(name = "numCreditos", nullable = false)
     private Integer numCreditos;
 
     // relación con MateriaPorPlan
