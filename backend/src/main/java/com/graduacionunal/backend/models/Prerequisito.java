@@ -1,9 +1,9 @@
-package com.graduacionunal.backend.model;
+package com.graduacionunal.backend.models;
 
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Prerequisito")
+@Table(name = "Prerequisito") //Nombre de la tabla en la base de datos
 public class Prerequisito {
 
     @EmbeddedId
@@ -21,8 +21,8 @@ public class Prerequisito {
     @JoinColumn(name = "idPrerequisito", nullable = false)
     private Materia prerequisito;
 
+    //Construtores
     public Prerequisito() {
-
     }
 
     public Prerequisito(Materia materia, Materia prerequisito) {
@@ -51,7 +51,7 @@ public class Prerequisito {
     public Materia getPrerequisito() { 
         return prerequisito; 
     }
-    
+
     public void setPrerequisito(Materia prerequisito) { 
         this.prerequisito = prerequisito; 
     }

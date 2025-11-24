@@ -1,9 +1,9 @@
-package com.graduacionunal.backend.model;
+package com.graduacionunal.backend.models;
 
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "MateriaPorPlan")
+@Table(name = "MateriaPorPlan") //Nombre de la tabla en la base de datos
 public class MateriaPorPlan {
 
     @EmbeddedId
@@ -20,9 +20,9 @@ public class MateriaPorPlan {
     @MapsId("idMateria") // usa la columna idMateria del EmbeddedId
     @JoinColumn(name = "idMateria", nullable = false)
     private Materia materia;
-
+    
+    //Construtores
     public MateriaPorPlan() {
-
     }
 
     public MateriaPorPlan(PlanEstudio planEstudio, Materia materia) {
@@ -51,7 +51,7 @@ public class MateriaPorPlan {
     public Materia getMateria() { 
         return materia; 
     }
-    
+
     public void setMateria(Materia materia) { 
         this.materia = materia; 
     }
