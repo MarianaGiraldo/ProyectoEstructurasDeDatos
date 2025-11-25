@@ -7,6 +7,6 @@ import com.graduacionunal.backend.models.Materia;
 public interface MateriaService {
     List<Materia> obtenerTodos();
     Materia guardar (Materia materia);
-    
+    Materia obtenerPorId(Integer idMateria);
 }
 

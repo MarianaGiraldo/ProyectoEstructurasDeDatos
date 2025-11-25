@@ -9,4 +9,5 @@ public interface PlanEstudioService {
     List<PlanEstudio> obtenerTodos();
     PlanEstudio guardar(PlanEstudio planEstudio);
     List<PlanCreditosDTO> obtenerCreditosTotalesPorPlan();
+    PlanEstudio obtenerPorId(Integer idPlanEstudio);
 }
