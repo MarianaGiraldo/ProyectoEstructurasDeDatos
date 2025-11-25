@@ -5,7 +5,7 @@ USE Graduacion;
 
 DROP TABLE IF EXISTS PlanEstudio;
 CREATE TABLE IF NOT EXISTS PlanEstudio(
-  idPlan INT NOT NULL PRIMARY KEY ,
+  idPlan INT NOT NULL PRIMARY KEY,
   nomPlan VARCHAR(100) NOT NULL
 );
 
