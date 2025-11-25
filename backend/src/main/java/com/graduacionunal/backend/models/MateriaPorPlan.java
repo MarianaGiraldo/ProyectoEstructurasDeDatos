@@ -13,7 +13,7 @@ public class MateriaPorPlan {
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("idPlan") // usa la columna idPlan del EmbeddedId
     @JoinColumn(name = "idPlan", nullable = false)
-    private PlanEstudio planEstudio;
+    private PlanEstudio planEstudio; 
 
     // dueño de la relación hacia Materia
     @ManyToOne(fetch = FetchType.LAZY)
