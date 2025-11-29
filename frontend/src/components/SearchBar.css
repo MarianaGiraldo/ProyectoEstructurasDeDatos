@@ -1,0 +1,10 @@
+.input_cont {
+    background-color: white;
+    border-radius: 10px;
+    padding: 5px
+}
+
+input {
+    border: none;
+    font-size: 1.25rem;
+}
