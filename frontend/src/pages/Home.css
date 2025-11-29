@@ -1,0 +1,22 @@
+.Home {
+  background-color: white;
+  width: 100%;
+  padding: 20px;
+}
+
+.search_bar_cont {
+  background-color: #7abc9b;
+  padding: 10px;
+  margin: auto;
+  display: flex;
+}
+
+.title_cont {
+  background-color: #06784f;
+  height: 50px;
+  color: white;
+  font-family: "press start 2p", monospace;
+  font-size: 24px;
+  padding: 10px;
+  text-align: center;
+}

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "../App.css";
+import "./Home.css";
 import { SearchBar } from "../components/SearchBar";
 
 function Home() {
@@ -9,7 +9,6 @@ function Home() {
         <div>PLANES DE ESTUDIO</div>
       </div>
       <div className="search_bar_cont">
-        <div>Buscar plan de estudios...</div>
         <SearchBar />
         <div>SearchResults</div>
       </div>
