@@ -1,0 +1,22 @@
+.tabs {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.tab-button {
+  flex: 1;
+  margin: 0;
+  border: none;
+  background-color: white;
+  color: black;
+  font-family: "Space Mono", monospace;
+  font-size: medium;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.tab-button.active {
+  background-color: #055d3f;
+  color: white;
+}
