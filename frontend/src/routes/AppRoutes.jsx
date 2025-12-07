@@ -1,10 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "../pages/Home";
 import DetallePlan from "../pages/DetallePlan";
-import ResumenPlan from "../pages/ResumenPlan";
-import GestionMaterias from "../pages/GestionMaterias";
-import GestionPrerrequisitos from "../pages/GestionPrerrequisitos";
-import ConfiguracionAcademica from "../pages/ConfiguracionAcademica";
+import Resumen from "../pages/Resumen";
+import Materias from "../pages/Materias";
+import Prerrequisitos from "../pages/Prerrequisitos";
+import Configuracion from "../pages/Configuracion";
 import Simulacion from "../pages/Simulacion";
 
 
@@ -18,10 +18,10 @@ function App() {
         <Route path="/plan" element={<DetallePlan />} />
 
         {/* Secciones internas */}
-        <Route path="/plan/resumen" element={<ResumenPlan />} />
-        <Route path="/plan/materias" element={<GestionMaterias />} />
-        <Route path="/plan/prerrequisitos" element={<GestionPrerrequisitos />} />
-        <Route path="/plan/configuracion" element={<ConfiguracionAcademica />} />
+        <Route path="/plan/resumen" element={<Resumen />} />
+        <Route path="/plan/materias" element={<Materias />} />
+        <Route path="/plan/prerrequisitos" element={<Prerrequisitos />} />
+        <Route path="/plan/configuracion" element={<Configuracion />} />
         <Route path="/plan/simulacion" element={<Simulacion />} />
       </Routes>
     </BrowserRouter>
@@ -29,4 +29,3 @@ function App() {
 }
 
 export default App;
-
