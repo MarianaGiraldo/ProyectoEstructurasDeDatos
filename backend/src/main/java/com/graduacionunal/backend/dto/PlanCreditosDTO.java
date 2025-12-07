@@ -2,9 +2,10 @@ package com.graduacionunal.backend.dto;
 
 public class PlanCreditosDTO {
     private String nomPlan;
-    private Integer totalCreditos;
+    // SUM in JPQL returns a Long, so we store the aggregate as Long to match the projection
+    private Long totalCreditos;
 
-    public PlanCreditosDTO(String nomPlan, Integer totalCreditos) {
+    public PlanCreditosDTO(String nomPlan, Long totalCreditos) {
         this.nomPlan = nomPlan;
         this.totalCreditos = totalCreditos;
     }
@@ -13,8 +14,7 @@ public class PlanCreditosDTO {
         return nomPlan;
     }
 
-    public Integer getTotalCreditos() {
+    public Long getTotalCreditos() {
         return totalCreditos;
     }
-    
 }
