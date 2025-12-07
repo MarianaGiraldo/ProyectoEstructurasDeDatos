@@ -1,10 +1,14 @@
 import { useState } from "react";
 import "./Home.css";
 import { SearchBar } from "../components/SearchBar";
+import unlogo from "../img/unlogo.png"
+import { TbBackground } from "react-icons/tb";
 
 function Home() {
   return (
     <div className="Home">
+      <div style = {{backgroundImage: `url(${unlogo})`, width: "30px", height: "30px"}}>
+      </div>
 
       <div className="title_cont">
         <div>PLANES DE ESTUDIO</div>
