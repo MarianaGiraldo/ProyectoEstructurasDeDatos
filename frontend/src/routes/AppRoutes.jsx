@@ -10,21 +10,18 @@ import Simulacion from "../pages/Simulacion";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-
-        {/* Detalle del plan */}
-        <Route path="/plan" element={<DetallePlan />} />
-
-        {/* Secciones internas */}
-        <Route path="/plan/resumen" element={<Resumen />} />
-        <Route path="/plan/materias" element={<Materias />} />
-        <Route path="/plan/prerrequisitos" element={<Prerrequisitos />} />
-        <Route path="/plan/configuracion" element={<Configuracion />} />
-        <Route path="/plan/simulacion" element={<Simulacion />} />
-      </Routes>
-    </BrowserRouter>
+  <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/plan" element={<DetallePlan />}>
+        <Route path="resumen" element={<Resumen />} />
+        <Route path="materias" element={<Materias />} />
+        <Route path="prerrequisitos" element={<Prerrequisitos />} />
+        <Route path="configuracion" element={<Configuracion />} />
+        <Route path="simulacion" element={<Simulacion />} />
+      </Route>
+    </Routes>
+  </BrowserRouter>
   );
 }
 

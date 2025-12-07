@@ -1,4 +1,9 @@
 import { useState } from "react";
+import Resumen from "./Resumen";
+import Materias from "./Materias";
+import Prerrequisitos from "./Prerrequisitos";
+import Configuracion from "./Configuracion";
+import Simulacion from "./Simulacion";
 
 export default function DetallePlan() {
   const [tab, setTab] = useState("Resumen");
@@ -26,11 +31,11 @@ export default function DetallePlan() {
       </button>
 
       <div style={{ marginTop: "20px" }}>
-        {tab === "Resumen" && <div>Resumen</div>}
-        {tab === "Materias" && <div>Materias</div>}
-        {tab === "Prerrequisitos" && <div>Prerrequisitos</div>}
-        {tab === "Configuracion" && <div>Configuración</div>}
-        {tab === "Simulacion" && <div>Simulación</div>}
+        {tab === "Resumen" && <Resumen />}
+        {tab === "Materias" && <Materias />}
+        {tab === "Prerrequisitos" && <Prerrequisitos />}
+        {tab === "Configuracion" && <Configuracion />}
+        {tab === "Simulacion" && <Simulacion />}
       </div>
     </div>
   );
