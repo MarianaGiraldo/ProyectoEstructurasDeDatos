@@ -16,8 +16,8 @@ import com.graduacionunal.backend.models.Prerequisito;
  * todas las materias, respetando un limite de materias por semestre.
  *
  * El algoritmo usa las estructuras de datos implementadas en el proyecto
- * (LinkedList y MyQueue) para mantener la lista de adyacencia y la cola de
- * nodos sin prerequisitos pendientes.
+ * (Graph, LinkedList y MyQueue) para mantener la lista de adyacencia y la
+ * cola de nodos sin prerequisitos pendientes.
  */
 public class KahnSemesterCalculator {
 
@@ -59,7 +59,6 @@ public class KahnSemesterCalculator {
      * @param maxMateriasPorSemestre limite de materias que se pueden cursar en un semestre.
      * @return un {@link SemesterPlan} con la cantidad minima de semestres y el detalle por semestre.
      */
-    @SuppressWarnings("unchecked")
     public SemesterPlan calcularSemestresMinimos(List<Materia> materias, List<Prerequisito> prerequisitos,
                                                  int maxMateriasPorSemestre) {
         if (materias == null || prerequisitos == null) {
@@ -83,11 +82,8 @@ public class KahnSemesterCalculator {
             indicePorId.put(materia.getIdMateria(), i);
         }
 
-        // Lista de adyacencia usando la LinkedList implementada en el proyecto.
-        LinkedList<Integer>[] adyacencia = (LinkedList<Integer>[]) new LinkedList<?>[n];
-        for (int i = 0; i < n; i++) {
-            adyacencia[i] = new LinkedList<>();
-        }
+        // Lista de adyacencia usando el grafo custom (dirigido).
+        Graph grafo = new Graph(n, true);
         int[] indegree = new int[n];
 
         for (Prerequisito prerequisito : prerequisitos) {
@@ -99,7 +95,7 @@ public class KahnSemesterCalculator {
                 continue;
             }
 
-            adyacencia[prereqIndex].pushBack(materiaIndex);
+            grafo.addEdge(prereqIndex, materiaIndex);
             indegree[materiaIndex] += 1;
         }
 
@@ -128,7 +124,7 @@ public class KahnSemesterCalculator {
                 procesadas += 1;
                 semestreActual.pushBack(materiasPorIndice[materiaIndex]);
 
-                for (Integer dependiente : adyacencia[materiaIndex]) {
+                for (Integer dependiente : grafo.getNeighbors(materiaIndex)) {
                     indegree[dependiente] -= 1;
                     if (indegree[dependiente] == 0) {
                         cola.enqueue(dependiente);
@@ -141,7 +137,7 @@ public class KahnSemesterCalculator {
 
         boolean tieneCiclo = procesadas < n;
         int minSemestres = tieneCiclo ? -1 : semestres.size();
-        return new SemesterPlan(minSemesters, semestres, tieneCiclo);
+        return new SemesterPlan(minSemestres, semestres, tieneCiclo);
     }
 
     // Extraemos de la cola controlando la excepcion checked de la implementacion.
