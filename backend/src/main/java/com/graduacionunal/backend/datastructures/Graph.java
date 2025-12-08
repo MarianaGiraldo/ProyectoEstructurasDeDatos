@@ -6,22 +6,35 @@ import com.graduacionunal.backend.datastructures.queue.MyQueueUnderFlowException
 
 public class Graph {
     private final LinkedList<Integer>[] adjList;
+    private final boolean directed;
+
+    public Graph(int n) {
+        this(n, false);
+    }
 
     @SuppressWarnings("unchecked")
-    public Graph(int n) {
+    public Graph(int n, boolean directed) {
         adjList = (LinkedList<Integer>[]) new LinkedList<?>[n];
+        this.directed = directed;
         for (int i = 0; i < n; i++) {
             adjList[i] = new LinkedList<>();
         }
     }
 
     public void addEdge(int u, int v) {
-        if (u != v && !adjList[u].contains(v)) {
+        if (u == v) {
+            return;
+        }
+        if (!adjList[u].contains(v)) {
             adjList[u].pushBack(v);
         }
-        if (u != v && !adjList[v].contains(u)) {
+        if (!directed && !adjList[v].contains(u)) {
             adjList[v].pushBack(u);
         }
+    }
+
+    public LinkedList<Integer> getNeighbors(int u) {
+        return adjList[u];
     }
 
     public int countNodesDFS() {
