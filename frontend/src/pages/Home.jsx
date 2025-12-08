@@ -8,7 +8,7 @@ function Home() {
   return (
     <div className="Home">
 
-      <div className="horizontal">
+      <div className="hori_cont">
         <div className="title_cont">
           <div>PLANES DE ESTUDIO</div>
         </div>
@@ -26,7 +26,8 @@ function Home() {
         </div>
 
         <div className="vert_cont right">
-          <p>
+          <div className="unlogo"></div>
+          <p className="text">
           Bienvenido, en esta pagina podrás saber cual es la mínima 
           cantidad de semestres que te puedes demorar en completar tu 
           carrera profesional en UNAL, para comenzar selecciona tu 
