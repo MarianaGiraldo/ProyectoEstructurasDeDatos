@@ -1,5 +1,6 @@
 package com.graduacionunal.backend.datastructures;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -85,18 +86,43 @@ public class KahnSemesterCalculator {
         // Lista de adyacencia usando el grafo custom (dirigido).
         Graph grafo = new Graph(n, true);
         int[] indegree = new int[n];
+        List<String> referenciasInvalidas = new ArrayList<>();
 
         for (Prerequisito prerequisito : prerequisitos) {
-            Integer prereqIndex = indicePorId.get(prerequisito.getPrerequisito().getIdMateria());
-            Integer materiaIndex = indicePorId.get(prerequisito.getMateria().getIdMateria());
+            Materia prereqMateria = prerequisito.getPrerequisito();
+            Materia materiaObjetivo = prerequisito.getMateria();
 
-            // Si la relacion hace referencia a una materia fuera de la lista, la ignoramos.
+            Integer prereqId = prereqMateria != null ? prereqMateria.getIdMateria() : null;
+            Integer materiaId = materiaObjetivo != null ? materiaObjetivo.getIdMateria() : null;
+
+            Integer prereqIndex = prereqId != null ? indicePorId.get(prereqId) : null;
+            Integer materiaIndex = materiaId != null ? indicePorId.get(materiaId) : null;
+
+            // Si la relacion hace referencia a una materia fuera de la lista, la registramos para reportar el error.
             if (prereqIndex == null || materiaIndex == null) {
+                StringBuilder detalle = new StringBuilder("prerequisito{materia=")
+                        .append(materiaId)
+                        .append(", prerequisito=")
+                        .append(prereqId)
+                        .append("} faltante: ");
+                if (prereqIndex == null) {
+                    detalle.append("prerequisito");
+                    if (materiaIndex == null) {
+                        detalle.append(" y materia");
+                    }
+                } else if (materiaIndex == null) {
+                    detalle.append("materia");
+                }
+                referenciasInvalidas.add(detalle.toString());
                 continue;
             }
 
             grafo.addEdge(prereqIndex, materiaIndex);
             indegree[materiaIndex] += 1;
+        }
+
+        if (!referenciasInvalidas.isEmpty()) {
+            throw new InvalidPrerequisiteReferenceException(referenciasInvalidas);
         }
 
         MyQueue<Integer> cola = new MyQueueArrayList<>(Math.max(1, n));
