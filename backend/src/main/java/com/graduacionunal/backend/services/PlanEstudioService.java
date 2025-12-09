@@ -4,6 +4,7 @@ import java.util.List;
 import com.graduacionunal.backend.dto.PlanCreditosDTO;
 import com.graduacionunal.backend.models.PlanEstudio;
 import com.graduacionunal.backend.dto.MateriaDTO;
+import com.graduacionunal.backend.datastructures.KahnSemesterCalculator;
 
 public interface PlanEstudioService {
     List<PlanEstudio> obtenerTodos();
@@ -12,4 +13,5 @@ public interface PlanEstudioService {
     PlanEstudio obtenerPorId(Integer idPlanEstudio);
     PlanEstudio eliminarPorId(Integer idPlanEstudio);
     List<MateriaDTO> obtenerMateriasDePlanEstudio(Integer idPlanEstudio);
+    KahnSemesterCalculator.SemesterPlan calcularSemestres(Integer idPlanEstudio, int maxMateriasPorSemestre);
 }

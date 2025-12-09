@@ -18,7 +18,8 @@ public interface PrerequisitoRepository extends JpaRepository<Prerequisito, Prer
     @Query("""
         SELECT DISTINCT p
         FROM Prerequisito p
-        JOIN p.materia m
+        JOIN FETCH p.materia m
+        JOIN FETCH p.prerequisito prereq
         JOIN m.planes mp
         WHERE mp.planEstudio.idPlan = :idPlan
         """)
@@ -30,9 +31,9 @@ public interface PrerequisitoRepository extends JpaRepository<Prerequisito, Prer
     @Query("""
         SELECT DISTINCT p
         FROM Prerequisito p
-        JOIN p.materia m
+        JOIN FETCH p.materia m
+        JOIN FETCH p.prerequisito prereq
         JOIN m.planes mp
-        JOIN p.prerequisito prereq
         JOIN prereq.planes prereqMp
         WHERE mp.planEstudio.idPlan = :idPlan
           AND prereqMp.planEstudio.idPlan = :idPlan
