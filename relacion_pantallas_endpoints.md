@@ -81,9 +81,3 @@ Objetivo UI: calcular el plan por semestres, mostrar semestres y permitir descar
   - Si hay ciclo / plan invalido: la API responde `409 CONFLICT`.
 - Datos auxiliares del plan (codigo/creditos): `GET /api/planes/{id}`
 
----
-
-## Checklist de "que falta" para que los mockups sean 100% funcionales
-
-1. Persistencia de configuracion por plan (materias/creditos por semestre y restricciones).
-2. Soporte de reglas adicionales en el motor de calculo (creditos por semestre / restricciones).
