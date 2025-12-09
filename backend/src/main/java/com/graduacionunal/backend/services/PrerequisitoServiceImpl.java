@@ -63,4 +63,24 @@ public class PrerequisitoServiceImpl implements PrerequisitoService {
     public List<Prerequisito> listarPorPlan(Integer idPlan) {
         return prerequisitoRepository.findByPlan(idPlan);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Prerequisito> listarEntrantesPorMateria(Integer idMateria) {
+        validarMateriaExiste(idMateria);
+        return prerequisitoRepository.findIncomingByMateria(idMateria);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Prerequisito> listarSalientesPorMateria(Integer idMateria) {
+        validarMateriaExiste(idMateria);
+        return prerequisitoRepository.findOutgoingByMateria(idMateria);
+    }
+
+    private void validarMateriaExiste(Integer idMateria) {
+        if (!materiaRepository.existsById(idMateria)) {
+            throw new ResourceNotFoundException("Materia no encontrada con id " + idMateria);
+        }
+    }
 }

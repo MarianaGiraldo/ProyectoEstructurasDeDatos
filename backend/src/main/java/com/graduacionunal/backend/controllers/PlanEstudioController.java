@@ -75,6 +75,18 @@ public class PlanEstudioController {
         return planEstudioService.obtenerMateriasDePlanEstudio(id);
     }
 
+    @PostMapping("/{id}/materias/{idMateria}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public MateriaPlanDTO asignarMateria(@PathVariable Integer id, @PathVariable Integer idMateria) {
+        return planEstudioService.asignarMateriaAPlan(id, idMateria);
+    }
+
+    @DeleteMapping("/{id}/materias/{idMateria}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void desasignarMateria(@PathVariable Integer id, @PathVariable Integer idMateria) {
+        planEstudioService.desasignarMateriaDePlan(id, idMateria);
+    }
+
     @GetMapping("/creditos")
     public List<PlanCreditosDTO> creditosTotales() {
         return planEstudioService.obtenerCreditosTotalesPorPlan();

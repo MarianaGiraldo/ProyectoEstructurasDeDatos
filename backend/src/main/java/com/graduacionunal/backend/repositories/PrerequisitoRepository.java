@@ -39,4 +39,22 @@ public interface PrerequisitoRepository extends JpaRepository<Prerequisito, Prer
           AND prereqMp.planEstudio.idPlan = :idPlan
         """)
     List<Prerequisito> findWithinPlan(@Param("idPlan") Integer idPlan);
+
+    @Query("""
+        SELECT p
+        FROM Prerequisito p
+        JOIN FETCH p.materia m
+        JOIN FETCH p.prerequisito prereq
+        WHERE m.idMateria = :idMateria
+        """)
+    List<Prerequisito> findIncomingByMateria(@Param("idMateria") Integer idMateria);
+
+    @Query("""
+        SELECT p
+        FROM Prerequisito p
+        JOIN FETCH p.materia m
+        JOIN FETCH p.prerequisito prereq
+        WHERE prereq.idMateria = :idMateria
+        """)
+    List<Prerequisito> findOutgoingByMateria(@Param("idMateria") Integer idMateria);
 }

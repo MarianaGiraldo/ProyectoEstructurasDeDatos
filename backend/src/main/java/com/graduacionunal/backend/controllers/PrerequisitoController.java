@@ -49,6 +49,20 @@ public class PrerequisitoController {
                 .collect(Collectors.toList());
     }
 
+    @GetMapping("/materia/{idMateria}/entrantes")
+    public List<PrerequisitoDTO> prerequisitosEntrantes(@PathVariable Integer idMateria) {
+        return prerequisitoService.listarEntrantesPorMateria(idMateria).stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/materia/{idMateria}/salientes")
+    public List<PrerequisitoDTO> prerequisitosSalientes(@PathVariable Integer idMateria) {
+        return prerequisitoService.listarSalientesPorMateria(idMateria).stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
+    }
+
     @DeleteMapping("/{idMateria}/{idPrerequisito}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void eliminarPrerequisito(@PathVariable Integer idMateria, @PathVariable Integer idPrerequisito) {
