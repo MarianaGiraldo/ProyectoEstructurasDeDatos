@@ -10,6 +10,7 @@ public class PlanEstudio {
 
     //Campos de la tabla
     @Id
+    @Column(name = "idPlan", nullable = false)
     private Integer idPlan;
 
     @Column(name = "nomPlan", length = 100, nullable = false)
@@ -23,32 +24,32 @@ public class PlanEstudio {
     public PlanEstudio() {
     }
 
-    public PlanEstudio(String nomPlan) { 
-        this.nomPlan = nomPlan; 
+    public PlanEstudio(String nomPlan) {
+        this.nomPlan = nomPlan;
     }
 
     // getters y setters
-    public Integer getIdPlan() { 
-        return idPlan; 
+    public Integer getIdPlan() {
+        return idPlan;
     }
 
-    public void setIdPlan(Integer idPlan) { 
-        this.idPlan = idPlan; 
+    public void setIdPlan(Integer idPlan) {
+        this.idPlan = idPlan;
     }
 
-    public String getNomPlan() { 
-        return nomPlan; 
+    public String getNomPlan() {
+        return nomPlan;
     }
 
-    public void setNomPlan(String nomPlan) { 
-        this.nomPlan = nomPlan; 
+    public void setNomPlan(String nomPlan) {
+        this.nomPlan = nomPlan;
     }
 
-    public Set<MateriaPorPlan> getMateriasPorPlan() { 
-        return materiasPorPlan; 
+    public Set<MateriaPorPlan> getMateriasPorPlan() {
+        return materiasPorPlan;
     }
 
-    public void setMateriasPorPlan(Set<MateriaPorPlan> materiasPorPlan) { 
-        this.materiasPorPlan = materiasPorPlan; 
+    public void setMateriasPorPlan(Set<MateriaPorPlan> materiasPorPlan) {
+        this.materiasPorPlan = materiasPorPlan;
     }
 }

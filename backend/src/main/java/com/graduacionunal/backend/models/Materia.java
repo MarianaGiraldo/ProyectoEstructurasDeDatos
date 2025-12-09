@@ -10,6 +10,7 @@ public class Materia {
 
     //Campos de la tabla
     @Id
+    @Column(name = "idMateria", nullable = false)
     private Integer idMateria;
 
     @Column(name = "nomMateria", length = 100, nullable = false)
@@ -38,51 +39,51 @@ public class Materia {
     }
 
     // getters y setters
-    public Integer getIdMateria() { 
-        return idMateria; 
+    public Integer getIdMateria() {
+        return idMateria;
     }
 
-    public void setIdMateria(Integer idMateria) { 
-        this.idMateria = idMateria; 
+    public void setIdMateria(Integer idMateria) {
+        this.idMateria = idMateria;
     }
 
-    public String getNomMateria() { 
-        return nomMateria; 
+    public String getNomMateria() {
+        return nomMateria;
     }
 
-    public void setNomMateria(String nomMateria) { 
-        this.nomMateria = nomMateria; 
+    public void setNomMateria(String nomMateria) {
+        this.nomMateria = nomMateria;
     }
 
-    public Integer getNumCreditos() { 
-        return numCreditos; 
+    public Integer getNumCreditos() {
+        return numCreditos;
     }
 
-    public void setNumCreditos(Integer numCreditos) { 
-        this.numCreditos = numCreditos; 
+    public void setNumCreditos(Integer numCreditos) {
+        this.numCreditos = numCreditos;
     }
 
-    public Set<MateriaPorPlan> getPlanes() { 
-        return planes; 
+    public Set<MateriaPorPlan> getPlanes() {
+        return planes;
     }
 
-    public void setPlanes(Set<MateriaPorPlan> planes) { 
-        this.planes = planes; 
+    public void setPlanes(Set<MateriaPorPlan> planes) {
+        this.planes = planes;
     }
 
-    public Set<Prerequisito> getEsPrerequisitoDe() { 
-        return esPrerequisitoDe; 
+    public Set<Prerequisito> getEsPrerequisitoDe() {
+        return esPrerequisitoDe;
     }
 
-    public void setEsPrerequisitoDe(Set<Prerequisito> esPrerequisitoDe) { 
-        this.esPrerequisitoDe = esPrerequisitoDe; 
+    public void setEsPrerequisitoDe(Set<Prerequisito> esPrerequisitoDe) {
+        this.esPrerequisitoDe = esPrerequisitoDe;
     }
 
-    public Set<Prerequisito> getPrerequisitos() { 
-        return prerequisitos; 
+    public Set<Prerequisito> getPrerequisitos() {
+        return prerequisitos;
     }
-    
-    public void setPrerequisitos(Set<Prerequisito> prerequisitos) { 
-        this.prerequisitos = prerequisitos; 
+
+    public void setPrerequisitos(Set<Prerequisito> prerequisitos) {
+        this.prerequisitos = prerequisitos;
     }
 }
