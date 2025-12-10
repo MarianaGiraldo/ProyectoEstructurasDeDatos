@@ -10,6 +10,7 @@ public class PlanEstudio {
 
     //Campos de la tabla
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idPlan", nullable = false)
     private Integer idPlan;
 
