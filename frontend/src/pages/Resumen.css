@@ -1,8 +1,8 @@
 /* Resumen.css - estilos para la vista Resumen (pmv2_1) */
 .Resumen {
   padding: 20px;
-  font-family: Arial, Helvetica, sans-serif;
-  color: #243b2b;
+  font-family: "spacemono", monospace;
+  
 }
 
 .resumen-header {
@@ -19,9 +19,14 @@
 }
 
 .plan-ident {
-  text-align: right;
+  background-color: #056343;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
 }
 .plan-name {
+  font-size: 40px;
+  color: white;
   font-weight: 700;
   font-size: 18px;
 }
@@ -38,27 +43,30 @@
 
 .stats {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: row;
   gap: 12px;
 }
 
 .stat-card {
   flex: 1 1 160px;
-  background: #fff;
-  border: 1px solid #e6efe8;
+  background-color: #7abc9b;
+  color: black;
+  border: none;
   padding: 16px;
-  border-radius: 8px;
+  border-radius: 30px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+  align-items: center;
+  text-align: center;
 }
 
 .stat-label {
-  font-size: 12px;
-  color: #557b67;
+  font-size: 16px;
+  color: black;
 }
 .stat-value {
   font-size: 20px;
   font-weight: 700;
-  color: #06784f;
+  color: black;
 }
 
 .materias-list {
@@ -88,13 +96,13 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px 12px;
-  border: 1px solid #e6efe8;
+  border: 2px solid black;
   border-radius: 8px;
   background: #f9fcfb;
 }
 
 .mat-nombre {
-  color: #056343;
+  color: black;
   font-weight: 600;
 }
 

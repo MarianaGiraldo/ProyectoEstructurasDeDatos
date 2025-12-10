@@ -98,6 +98,23 @@ export default function Materias({ planId }) {
   return (
     <div className="Materias">
       <h3>Materias del plan</h3>
+      <div className="create-materia">
+        <h4>Crear nueva materia</h4>
+        <input
+          placeholder="Nombre"
+          value={newMateria.nombre}
+          onChange={(e) => setNewMateria({ ...newMateria, nombre: e.target.value })}
+        />
+        <input
+          type="number"
+          placeholder="Créditos"
+          value={newMateria.creditos}
+          onChange={(e) => setNewMateria({ ...newMateria, creditos: Number(e.target.value) })}
+        />
+        <div className="create-actions">
+          <button className="btn-create" onClick={handleCreateMateria}>Crear</button>
+        </div>
+      </div>
       {note && <div className="note">{note}</div>}
       {loading ? (
         <div>Cargando...</div>
@@ -118,24 +135,6 @@ export default function Materias({ planId }) {
           ))}
         </div>
       )}
-
-      <div className="create-materia">
-        <h4>Crear nueva materia</h4>
-        <input
-          placeholder="Nombre"
-          value={newMateria.nombre}
-          onChange={(e) => setNewMateria({ ...newMateria, nombre: e.target.value })}
-        />
-        <input
-          type="number"
-          placeholder="Créditos"
-          value={newMateria.creditos}
-          onChange={(e) => setNewMateria({ ...newMateria, creditos: Number(e.target.value) })}
-        />
-        <div className="create-actions">
-          <button className="btn-create" onClick={handleCreateMateria}>Crear</button>
-        </div>
-      </div>
     </div>
   );
 }

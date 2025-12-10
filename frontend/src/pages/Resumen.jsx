@@ -74,7 +74,6 @@ export default function Resumen({ planId }) {
   return (
     <div className="Resumen">
       <div className="resumen-header">
-        <h2>Resumen del plan</h2>
         <div className="plan-ident">
           <div className="plan-name">{plan ? plan.nombre : "-"}</div>
           <div className="plan-code">{plan ? plan.codigo : "-"}</div>

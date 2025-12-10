@@ -126,33 +126,6 @@ function Home() {
 
       <div className="vert_cont">
         <div className="vert_cont left">
-          {showCreateForm && (
-            <div className="create-plan-form">
-              <h3>Crear Nuevo Plan</h3>
-              <input
-                type="text"
-                placeholder="Nombre del plan"
-                value={newPlanData.nombre}
-                onChange={(e) => setNewPlanData({ ...newPlanData, nombre: e.target.value })}
-                className="input-field"
-              />
-              <div className="form-buttons">
-                <button className="btn-confirm" onClick={handleCreatePlan}>
-                  Crear
-                </button>
-                <button
-                  className="btn-cancel"
-                  onClick={() => {
-                    setShowCreateForm(false);
-                    setNewPlanData({ nombre: "" });
-                  }}
-                >
-                  Cancelar
-                </button>
-              </div>
-            </div>
-          )}
-
           {loading ? (
             <div className="plans-container">Cargando planes...</div>
           ) : (
@@ -195,6 +168,32 @@ function Home() {
               >
                 <TbPlus size={20} /> Crear nuevo plan de estudios
               </button>
+              {showCreateForm && (
+                <div className="create-plan-form">
+                  <h3>Crear Nuevo Plan</h3>
+                  <input
+                    type="text"
+                    placeholder="Nombre del plan"
+                    value={newPlanData.nombre}
+                    onChange={(e) => setNewPlanData({ ...newPlanData, nombre: e.target.value })}
+                    className="input-field"
+                  />
+                  <div className="form-buttons">
+                    <button className="btn-confirm" onClick={handleCreatePlan}>
+                      Crear
+                    </button>
+                    <button
+                      className="btn-cancel"
+                      onClick={() => {
+                        setShowCreateForm(false);
+                        setNewPlanData({ nombre: "" });
+                      }}
+                    >
+                      Cancelar
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           )}
         </div>
