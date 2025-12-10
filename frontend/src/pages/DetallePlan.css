@@ -2,17 +2,17 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
-  border-bottom: 2px solid #e6efe8;
+  border-bottom: 2px solid white;
 }
 
 .tab-button {
   flex: 1;
   margin: 0;
-  border-right: 1px solid #e6efe8;
+  border-right: 1px solid white;
   background-color: white;
-  color: #21332a;
-  font-family: Inter, Arial, Helvetica, sans-serif;
-  font-size: 14px;
+  color: black;
+  font-family: "Space Mono", monospace;
+  font-size: 16px;
   font-weight: 600;
   padding: 12px 16px;
   cursor: pointer;
