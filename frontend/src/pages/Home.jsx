@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "./Home.css";
 import { SearchBar } from "../components/SearchBar";
-import { TbBackground, TbPlus } from "react-icons/tb";
+import { TbPlus } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
 
 const API_BASE_URL = "http://localhost:8080/api";
@@ -10,7 +10,7 @@ function Home() {
   const [planes, setPlanes] = useState([]);
   const [creditosPorPlan, setCreditosPorPlan] = useState({});
   const [searchResults, setSearchResults] = useState([]);
-  const [setShowSearchResults] = useState(false);
+  const [showSearchResults, setShowSearchResults] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [newPlanData, setNewPlanData] = useState({ nombre: "", codigo: "" });
@@ -171,7 +171,15 @@ function Home() {
                   >
                     <div className="plan-header">
                       <h3>{plan.nombre}</h3>
-                      <span className="plan-code">{plan.codigo}</span>
+                      <div className="plan-actions">
+                        <span className="plan-code">{plan.codigo}</span>
+                        <button
+                          className="btn-ver-resumen"
+                          onClick={(e) => { e.stopPropagation(); handleSelectPlan(plan.id); }}
+                        >
+                          Ver resumen
+                        </button>
+                      </div>
                     </div>
                     <div className="plan-credits">
                       <strong>Créditos:</strong> {creditosPorPlan[plan.id] || 0}

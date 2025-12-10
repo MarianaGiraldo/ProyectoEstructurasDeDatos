@@ -1,0 +1,9 @@
+/* Styles for Configuracion page */
+.Configuracion { padding:16px; }
+.config-row { display:flex; align-items:center; gap:12px; margin-bottom:10px; }
+.config-row label { width:220px; color:#355c49; }
+.config-row input { padding:8px; border-radius:6px; border:1px solid #ccc; width:120px; }
+.config-actions { margin-top:12px; }
+.btn-save { background:#06784f; color:white; padding:8px 12px; border:none; border-radius:6px; cursor:pointer; }
+.explain { margin-top:12px; color:#555; font-size:13px; }
+.note { color:#666; margin-bottom:8px; }

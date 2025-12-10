@@ -2,21 +2,34 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
+  border-bottom: 2px solid #e6efe8;
 }
 
 .tab-button {
   flex: 1;
   margin: 0;
-  border: none;
+  border-right: 1px solid #e6efe8;
   background-color: white;
-  color: black;
-  font-family: "Space Mono", monospace;
-  font-size: medium;
-  padding: 8px 16px;
+  color: #21332a;
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 12px 16px;
   cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tab-button:last-child {
+  border-right: none;
+}
+
+.tab-button:hover {
+  background-color: #f9fcfb;
 }
 
 .tab-button.active {
   background-color: #055d3f;
   color: white;
+  border-bottom: 3px solid #055d3f;
+  margin-bottom: -2px;
 }

@@ -221,6 +221,24 @@
   white-space: nowrap;
 }
 
+.plan-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.btn-ver-resumen {
+  background-color: #0b8f5a;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.btn-ver-resumen:hover { background-color: #06784f; }
+
 .plan-credits {
   color: #555;
   font-size: 14px;
