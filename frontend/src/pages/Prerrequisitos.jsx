@@ -114,7 +114,6 @@ export default function Prerrequisitos({ planId }) {
 
   return (
     <div className="Prerrequisitos">
-      <h3>Prerrequisitos del plan</h3>
       {note && <div className="note">{note}</div>}
       {loading ? (
         <div>Cargando...</div>

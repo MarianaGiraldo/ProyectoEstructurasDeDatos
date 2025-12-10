@@ -97,7 +97,6 @@ export default function Materias({ planId }) {
 
   return (
     <div className="Materias">
-      <h3>Materias del plan</h3>
       <div className="create-materia">
         <h4>Crear nueva materia</h4>
         <input
@@ -119,21 +118,21 @@ export default function Materias({ planId }) {
       {loading ? (
         <div>Cargando...</div>
       ) : (
-        <div className="materias-list">
-          {materias.length === 0 && <div>No hay materias asignadas</div>}
-          {materias.map((m) => (
-            <div key={m.id} className="materia-card">
-              <div className="materia-left">
-                <div className="materia-name">{m.nombre}</div>
-                <div className="materia-code">ID: {m.id}</div>
-              </div>
-              <div className="materia-right">
-                <div className="materia-credits-mat">{m.creditos} cr</div>
-                <button className="btn-remove" onClick={() => handleRemoveMateriaFromPlan(m.id)}>Desasignar</button>
-              </div>
+      <div className="materias-list">
+        {materias.length === 0 && <div>No hay materias asignadas</div>}
+        {materias.map((m) => (
+          <div key={m.id} className="materia-card">
+            <div className="materia-left">
+              <div className="materia-name">{m.nombre}</div>
+              <div className="materia-code">ID: {m.id}</div>
             </div>
-          ))}
-        </div>
+            <div className="materia-right">
+              <div className="materia-credits-mat">{m.creditos} cr</div>
+              <button className="btn-remove" onClick={() => handleRemoveMateriaFromPlan(m.id)}>Desasignar</button>
+            </div>
+          </div>
+        ))}
+      </div>
       )}
     </div>
   );

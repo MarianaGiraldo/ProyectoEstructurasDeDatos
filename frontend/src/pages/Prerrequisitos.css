@@ -6,7 +6,7 @@
 
 .Prerrequisitos {
 	padding: 20px;
-	font-family: Inter, Arial, Helvetica, sans-serif;
+	font-family: "spacemono", monospace;
 	color: #21332a;
 	background: #fbfff9;
 }
@@ -25,8 +25,8 @@
 	gap: 12px;
 	align-items: center;
 	padding: 14px;
-	border-radius: 10px;
-	background: #fff;
+	border-radius: 20px;
+	background: white;
 	border: 1px solid #e6efe8;
 	box-shadow: 0 6px 18px rgba(2,38,26,0.04);
 }
@@ -35,8 +35,16 @@
 	display:flex;
 	flex-direction:column;
 }
-.relation-materia .name { font-weight:700; color:#056343; font-size:15px }
-.relation-materia .code { font-size:13px; color:#6b786f }
+.relation-materia .name { 
+	font-weight:700; 
+	color: black; 
+	font-size:15px;
+}
+
+.relation-materia .code { 
+	font-size:13px; 
+	color:#6b786f 
+}
 
 .relation-prereqs {
 	display:flex;
