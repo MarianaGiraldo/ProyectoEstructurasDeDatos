@@ -15,18 +15,44 @@ export default function Resumen({ planId }) {
   useEffect(() => {
     if (!actualPlanId) return;
 
-    const fetchPlan = async () => {
+    const fetchData = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`${API_BASE_URL}/planes/${actualPlanId}`);
-        if (!res.ok) throw new Error("Error al obtener plan");
-        const data = await res.json();
+        const [planRes, materiasRes, creditosRes] = await Promise.all([
+          fetch(`${API_BASE_URL}/planes/${actualPlanId}`),
+          fetch(`${API_BASE_URL}/planes/${actualPlanId}/materias`),
+          fetch(`${API_BASE_URL}/planes/creditos`)
+        ]);
+
+        if (!planRes.ok) throw new Error("Error al obtener plan");
+        const planData = await planRes.json();
+        const materiasData = materiasRes.ok ? await materiasRes.json() : [];
+        const creditosData = creditosRes.ok ? await creditosRes.json() : [];
+
+        const creditosLookup = Array.isArray(creditosData)
+          ? creditosData.reduce((acc, item) => {
+              const key = item.nomPlan ?? item.nombre;
+              if (key) acc[key] = item.totalCreditos ?? item.creditos ?? 0;
+              return acc;
+            }, {})
+          : {};
+
+        const mappedMaterias = Array.isArray(materiasData)
+          ? materiasData.map((m, idx) => ({
+              id: m.idMateria ?? idx,
+              nombre: m.nomMateria ?? m.nombre ?? "-",
+              creditos: m.numCreditos ?? m.creditos ?? 0,
+            }))
+          : [];
+
+        const nombrePlan = planData.nomPlan ?? planData.nombre ?? "-";
         setPlan({
-          id: data.idPlan ?? data.id,
-          nombre: data.nomPlan ?? data.nombre ?? "-",
-          codigo: data.codigo ?? data.idPlan ?? data.id ?? "-",
-          creditos: data.creditos ?? data.creditosTotales,
+          id: planData.idPlan ?? planData.id,
+          nombre: nombrePlan,
+          codigo: planData.codigo ?? planData.idPlan ?? planData.id ?? "-",
+          creditos: creditosLookup[nombrePlan] ?? planData.creditos ?? planData.creditosTotales ?? "-",
         });
+        setMaterias(mappedMaterias);
       } catch (e) {
         console.error(e);
       } finally {
@@ -34,26 +60,7 @@ export default function Resumen({ planId }) {
       }
     };
 
-    const fetchMaterias = async () => {
-      try {
-        const res = await fetch(`${API_BASE_URL}/planes/${actualPlanId}/materias`);
-        if (!res.ok) throw new Error("Error al obtener materias");
-        const data = await res.json();
-        const mapped = Array.isArray(data)
-          ? data.map((m, idx) => ({
-              id: m.idMateria ?? idx,
-              nombre: m.nomMateria ?? m.nombre ?? "-",
-              creditos: m.numCreditos ?? m.creditos ?? 0,
-            }))
-          : [];
-        setMaterias(mapped);
-      } catch (e) {
-        console.error(e);
-      }
-    };
-
-    fetchPlan();
-    fetchMaterias();
+    fetchData();
   }, [actualPlanId]);
 
   if (!actualPlanId) {
@@ -103,7 +110,7 @@ export default function Resumen({ planId }) {
               {materias.map((m) => (
                 <li key={m.id}>
                   <span className="mat-nombre">{m.nombre}</span>
-                  <span className="mat-creditos">{m.creditos} cr</span>
+                  <span className="mat-creditos">{m.creditos} créditos</span>
                 </li>
               ))}
             </ul>
