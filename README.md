@@ -97,7 +97,7 @@ cd backend
 ```
 
 Por defecto la API quedará disponible en:  
-`http://localhost:8080`
+`http://localhost:8088`
 
 ### 4. Frontend (React + Vite)
 
