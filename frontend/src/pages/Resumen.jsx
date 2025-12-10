@@ -1,38 +1,32 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import "./Resumen.css";
 
 const API_BASE_URL = "http://localhost:8088/api";
 
 export default function Resumen({ planId }) {
   const params = useParams();
-  const actualPlanId = planId || params.id || null;
+  const location = useLocation();
+  const actualPlanId = planId ?? params.id ?? location.state?.planId ?? null;
   const [plan, setPlan] = useState(null);
   const [materias, setMaterias] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [semestresResult, setSemestresResult] = useState(null);
-  const [L, setL] = useState(5);
 
   useEffect(() => {
     if (!actualPlanId) return;
-    if (actualPlanId === "demo") {
-      // mock data for demo
-      setPlan({ id: "demo", nombre: "Plan Demo - Ingeniería", codigo: "DEMO-01", creditos: 160 });
-      setMaterias([
-        { id: "m1", nombre: "Introducción a la Ingeniería", codigo: "ING101", creditos: 3 },
-        { id: "m2", nombre: "Matemáticas I", codigo: "MAT101", creditos: 4 },
-        { id: "m3", nombre: "Programación", codigo: "PROG101", creditos: 4 },
-      ]);
-      return;
-    }
 
-    const fetchPlanLocal = async () => {
+    const fetchPlan = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`${API_BASE_URL}/planes/${planId}`);
+        const res = await fetch(`${API_BASE_URL}/planes/${actualPlanId}`);
         if (!res.ok) throw new Error("Error al obtener plan");
         const data = await res.json();
-        setPlan(data);
+        setPlan({
+          id: data.idPlan ?? data.id,
+          nombre: data.nomPlan ?? data.nombre ?? "-",
+          codigo: data.codigo ?? data.idPlan ?? data.id ?? "-",
+          creditos: data.creditos ?? data.creditosTotales,
+        });
       } catch (e) {
         console.error(e);
       } finally {
@@ -40,45 +34,29 @@ export default function Resumen({ planId }) {
       }
     };
 
-    const fetchMateriasLocal = async () => {
+    const fetchMaterias = async () => {
       try {
-        const res = await fetch(`${API_BASE_URL}/planes/${planId}/materias`);
+        const res = await fetch(`${API_BASE_URL}/planes/${actualPlanId}/materias`);
         if (!res.ok) throw new Error("Error al obtener materias");
         const data = await res.json();
-        setMaterias(data || []);
+        const mapped = Array.isArray(data)
+          ? data.map((m, idx) => ({
+              id: m.idMateria ?? idx,
+              nombre: m.nomMateria ?? m.nombre ?? "-",
+              creditos: m.numCreditos ?? m.creditos ?? 0,
+            }))
+          : [];
+        setMaterias(mapped);
       } catch (e) {
         console.error(e);
       }
     };
 
-    fetchPlanLocal();
-    fetchMateriasLocal();
-  }, [actualPlanId, planId]);
+    fetchPlan();
+    fetchMaterias();
+  }, [actualPlanId]);
 
-  const handleCalcularSemestres = async () => {
-    try {
-      setSemestresResult(null);
-      if (actualPlanId === "demo") {
-        // provide mock semestres
-        const mock = [["ING101", "MAT101"], ["PROG101"]];
-        setSemestresResult({ data: mock });
-        return;
-      }
-      const res = await fetch(`${API_BASE_URL}/planes/${actualPlanId}/semestres?max=${L}`);
-      if (res.status === 409) {
-        setSemestresResult({ error: "El plan tiene dependencias cíclicas (409 CONFLICT)" });
-        return;
-      }
-      if (!res.ok) throw new Error("Error al calcular semestres");
-      const data = await res.json();
-      setSemestresResult({ data });
-    } catch (e) {
-      console.error(e);
-      setSemestresResult({ error: "Error al calcular semestres" });
-    }
-  };
-
-  if (!planId) {
+  if (!actualPlanId) {
     return (
       <div className="Resumen">
         <div className="placeholder">Selecciona un plan para ver el resumen.</div>
@@ -100,7 +78,9 @@ export default function Resumen({ planId }) {
         <div className="stats">
           <div className="stat-card">
             <div className="stat-label">Créditos totales</div>
-            <div className="stat-value">{plan?.creditos || plan?.creditosTotales || "-"}</div>
+            <div className="stat-value">
+              {plan?.creditos ?? "-"}
+            </div>
           </div>
 
           <div className="stat-card">
@@ -114,31 +94,20 @@ export default function Resumen({ planId }) {
           </div>
         </div>
 
-        <div className="simulacion-box">
-          <h3>Calcular semestres</h3>
-          <div className="sim-controls">
-            <label>
-              Máx materias por semestre (L):
-              <input
-                type="number"
-                min={1}
-                value={L}
-                onChange={(e) => setL(Number(e.target.value) || 1)}
-              />
-            </label>
-            <button className="btn-calc" onClick={handleCalcularSemestres}>Calcular</button>
-          </div>
-
-          {semestresResult ? (
-            semestresResult.error ? (
-              <div className="error">{semestresResult.error}</div>
-            ) : (
-              <div className="semestres-result">
-                <h4>Resultado</h4>
-                <pre>{JSON.stringify(semestresResult.data, null, 2)}</pre>
-              </div>
-            )
-          ) : null}
+        <div className="materias-list">
+          <h3>Materias del plan</h3>
+          {materias.length === 0 ? (
+            <div className="empty-msg">No se encontraron materias</div>
+          ) : (
+            <ul>
+              {materias.map((m) => (
+                <li key={m.id}>
+                  <span className="mat-nombre">{m.nombre}</span>
+                  <span className="mat-creditos">{m.creditos} cr</span>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
     </div>

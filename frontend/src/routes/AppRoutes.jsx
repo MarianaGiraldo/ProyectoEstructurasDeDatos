@@ -15,6 +15,7 @@ function App() {
       <Route path="/" element={<Home />} />
       {/* Ruta compatibilidad: Detalle por id (usada desde Home) */}
       <Route path="/detalle-plan/:id" element={<DetallePlan />}>
+        <Route index element={<Resumen />} />
         <Route path="resumen" element={<Resumen />} />
         <Route path="materias" element={<Materias />} />
         <Route path="prerrequisitos" element={<Prerrequisitos />} />
@@ -22,6 +23,7 @@ function App() {
         <Route path="simulacion" element={<Simulacion />} />
       </Route>
       <Route path="/plan" element={<DetallePlan />}>
+        <Route index element={<Resumen planId="demo" />} />
         <Route path="resumen" element={<Resumen planId="demo" />} />
         <Route path="materias" element={<Materias planId="demo" />} />
         <Route path="prerrequisitos" element={<Prerrequisitos planId="demo" />} />
