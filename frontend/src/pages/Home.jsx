@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import "./Home.css";
 import { SearchBar } from "../components/SearchBar";
-import unlogo from "../img/unlogo.png"
 import { TbBackground, TbPlus } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
 
@@ -11,7 +10,7 @@ function Home() {
   const [planes, setPlanes] = useState([]);
   const [creditosPorPlan, setCreditosPorPlan] = useState({});
   const [searchResults, setSearchResults] = useState([]);
-  const [showSearchResults, setShowSearchResults] = useState(false);
+  const [setShowSearchResults] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [newPlanData, setNewPlanData] = useState({ nombre: "", codigo: "" });
