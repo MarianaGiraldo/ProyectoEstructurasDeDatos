@@ -4,7 +4,21 @@ import { SearchBar } from "../components/SearchBar";
 import { TbPlus } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
 
-const API_BASE_URL = "http://localhost:8080/api";
+const API_BASE_URL = "http://localhost:8088/api";
+
+const normalizePlan = (plan) => ({
+  id: plan.id ?? plan.idPlan,
+  nombre: plan.nombre ?? plan.nomPlan ?? "",
+  codigo: plan.codigo ?? (plan.idPlan ? `PLAN-${plan.idPlan}` : plan.codigo),
+});
+
+const buildCreditosLookup = (items) =>
+  items.reduce((acc, item) => {
+    const key = item.idPlan ?? item.nomPlan ?? item.nombre;
+    const value = item.totalCreditos ?? item.creditos ?? 0;
+    if (key !== undefined && key !== null) acc[key] = value;
+    return acc;
+  }, {});
 
 function Home() {
   const [planes, setPlanes] = useState([]);
@@ -13,10 +27,9 @@ function Home() {
   const [showSearchResults, setShowSearchResults] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showCreateForm, setShowCreateForm] = useState(false);
-  const [newPlanData, setNewPlanData] = useState({ nombre: "", codigo: "" });
+  const [newPlanData, setNewPlanData] = useState({ nombre: "" });
   const navigate = useNavigate();
 
-  // Cargar lista de planes
   useEffect(() => {
     fetchPlanes();
     fetchCreditosPorPlan();
@@ -28,8 +41,9 @@ function Home() {
       const response = await fetch(`${API_BASE_URL}/planes`);
       if (!response.ok) throw new Error("Error al cargar planes");
       const data = await response.json();
-      setPlanes(data);
-      setSearchResults(data);
+      const normalized = data.map(normalizePlan);
+      setPlanes(normalized);
+      setSearchResults(normalized);
     } catch (error) {
       console.error("Error:", error);
     } finally {
@@ -42,7 +56,7 @@ function Home() {
       const response = await fetch(`${API_BASE_URL}/planes/creditos`);
       if (!response.ok) throw new Error("Error al cargar créditos");
       const data = await response.json();
-      setCreditosPorPlan(data);
+      setCreditosPorPlan(buildCreditosLookup(data));
     } catch (error) {
       console.error("Error:", error);
     }
@@ -53,9 +67,9 @@ function Home() {
       setSearchResults(planes);
       setShowSearchResults(false);
     } else {
-      const filtered = planes.filter(plan =>
+      const filtered = planes.filter((plan) =>
         plan.nombre.toLowerCase().includes(query.toLowerCase()) ||
-        plan.codigo.toLowerCase().includes(query.toLowerCase())
+        (plan.codigo || "").toLowerCase().includes(query.toLowerCase())
       );
       setSearchResults(filtered);
       setShowSearchResults(true);
@@ -63,8 +77,8 @@ function Home() {
   };
 
   const handleCreatePlan = async () => {
-    if (!newPlanData.nombre.trim() || !newPlanData.codigo.trim()) {
-      alert("Por favor completa todos los campos");
+    if (!newPlanData.nombre.trim()) {
+      alert("Por favor ingresa el nombre del plan");
       return;
     }
 
@@ -72,21 +86,22 @@ function Home() {
       const response = await fetch(`${API_BASE_URL}/planes`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newPlanData),
+        body: JSON.stringify({ nomPlan: newPlanData.nombre }),
       });
 
       if (!response.ok) throw new Error("Error al crear plan");
-      
+
       const createdPlan = await response.json();
-      setNewPlanData({ nombre: "", codigo: "" });
+      setNewPlanData({ nombre: "" });
       setShowCreateForm(false);
-      
-      // Recargar planes
+
       fetchPlanes();
       fetchCreditosPorPlan();
-      
-      // Navegar al detalle del plan creado
-      navigate(`/detalle-plan/${createdPlan.id}`);
+
+      const createdId = createdPlan.id ?? createdPlan.idPlan;
+      if (createdId !== undefined && createdId !== null) {
+        navigate(`/detalle-plan/${createdId}`);
+      }
     } catch (error) {
       console.error("Error:", error);
       alert("Error al crear el plan");
@@ -99,7 +114,6 @@ function Home() {
 
   return (
     <div className="Home">
-
       <div className="hori_cont">
         <div className="title_cont">
           <div>PLANES DE ESTUDIO</div>
@@ -111,11 +125,10 @@ function Home() {
       </div>
 
       <div className="vert_cont">
-
         <div className="vert_cont left">
           <div className="plans_header">
             <h2>Planes de estudio disponibles</h2>
-            <button 
+            <button
               className="btn-crear-plan"
               onClick={() => setShowCreateForm(!showCreateForm)}
               title="Crear nuevo plan de estudios"
@@ -134,22 +147,15 @@ function Home() {
                 onChange={(e) => setNewPlanData({ ...newPlanData, nombre: e.target.value })}
                 className="input-field"
               />
-              <input
-                type="text"
-                placeholder="Código del plan"
-                value={newPlanData.codigo}
-                onChange={(e) => setNewPlanData({ ...newPlanData, codigo: e.target.value })}
-                className="input-field"
-              />
               <div className="form-buttons">
                 <button className="btn-confirm" onClick={handleCreatePlan}>
                   Crear
                 </button>
-                <button 
-                  className="btn-cancel" 
+                <button
+                  className="btn-cancel"
                   onClick={() => {
                     setShowCreateForm(false);
-                    setNewPlanData({ nombre: "", codigo: "" });
+                    setNewPlanData({ nombre: "" });
                   }}
                 >
                   Cancelar
@@ -163,7 +169,7 @@ function Home() {
           ) : (
             <div className="plans-container">
               {searchResults.length > 0 ? (
-                searchResults.map(plan => (
+                searchResults.map((plan) => (
                   <div
                     key={plan.id}
                     className="plan-card"
@@ -172,17 +178,21 @@ function Home() {
                     <div className="plan-header">
                       <h3>{plan.nombre}</h3>
                       <div className="plan-actions">
-                        <span className="plan-code">{plan.codigo}</span>
+                        <span className="plan-code">{plan.codigo || plan.id}</span>
                         <button
                           className="btn-ver-resumen"
-                          onClick={(e) => { e.stopPropagation(); handleSelectPlan(plan.id); }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleSelectPlan(plan.id);
+                          }}
                         >
                           Ver resumen
                         </button>
                       </div>
                     </div>
                     <div className="plan-credits">
-                      <strong>Créditos:</strong> {creditosPorPlan[plan.id] || 0}
+                      <strong>Créditos:</strong>{" "}
+                      {creditosPorPlan[plan.id] ?? creditosPorPlan[plan.nombre] ?? 0}
                     </div>
                   </div>
                 ))
@@ -196,15 +206,14 @@ function Home() {
         <div className="vert_cont right">
           <div className="unlogo"></div>
           <p className="text">
-          Bienvenido, en esta pagina podrás saber cual es la mínima 
-          cantidad de semestres que te puedes demorar en completar tu 
-          carrera profesional en UNAL, para comenzar selecciona tu 
-          plan de estudios, si no lo encuentras lo puedes ingresar 
-          manualmente.
+            Bienvenido, en esta pagina podrás saber cual es la mínima
+            cantidad de semestres que te puedes demorar en completar tu
+            carrera profesional en UNAL, para comenzar selecciona tu
+            plan de estudios, si no lo encuentras lo puedes ingresar
+            manualmente.
           </p>
         </div>
       </div>
-
     </div>
   );
 }
