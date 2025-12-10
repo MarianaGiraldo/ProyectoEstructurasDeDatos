@@ -3,6 +3,8 @@ package com.graduacionunal.backend.datastructures;
 import com.graduacionunal.backend.datastructures.queue.MyQueue;
 import com.graduacionunal.backend.datastructures.queue.MyQueueArrayList;
 import com.graduacionunal.backend.datastructures.queue.MyQueueUnderFlowException;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 public class Graph {
     private final LinkedList<Integer>[] adjList;
@@ -38,24 +40,39 @@ public class Graph {
     }
 
     public int countNodesDFS() {
-        boolean[] visited = new boolean[adjList.length];
-        return dfs(0, visited);
-    }
-
-    private int dfs(int start, boolean[] visited) {
-        visited[start] = true;
-        int count = 1;
-        for (Integer i : adjList[start]) {
-            if (!visited[i]) {
-                count += dfs(i, visited);
-            }
+        if (adjList.length == 0) {
+            return 0;
         }
-        return count;
+        boolean[] visited = new boolean[adjList.length];
+        return dfsIterative(0, visited);
     }
 
     public int countNodesBFS() {
+        if (adjList.length == 0) {
+            return 0;
+        }
         boolean[] visited = new boolean[adjList.length];
         return bfs(0, visited);
+    }
+
+    private int dfsIterative(int start, boolean[] visited) {
+        int count = 0;
+        Deque<Integer> stack = new ArrayDeque<>();
+        stack.push(start);
+        while (!stack.isEmpty()) {
+            int node = stack.pop();
+            if (visited[node]) {
+                continue;
+            }
+            visited[node] = true;
+            count += 1;
+            for (Integer neighbor : adjList[node]) {
+                if (!visited[neighbor]) {
+                    stack.push(neighbor);
+                }
+            }
+        }
+        return count;
     }
 
     private int bfs(int start, boolean[] visited) {
