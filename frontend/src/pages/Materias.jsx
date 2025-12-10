@@ -111,7 +111,7 @@ export default function Materias({ planId }) {
                 <div className="materia-code">ID: {m.id}</div>
               </div>
               <div className="materia-right">
-                <div className="materia-credits">{m.creditos} cr</div>
+                <div className="materia-credits-mat">{m.creditos} cr</div>
                 <button className="btn-remove" onClick={() => handleRemoveMateriaFromPlan(m.id)}>Desasignar</button>
               </div>
             </div>
