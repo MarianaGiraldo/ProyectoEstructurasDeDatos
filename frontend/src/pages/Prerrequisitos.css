@@ -83,12 +83,25 @@
 .add-relation {
 	margin-top:18px;
 	display:grid;
-	grid-template-columns: 1fr 1fr 140px;
+	grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 	gap: 8px;
 	align-items:center;
 	max-width: 920px;
+	width: 100%;
 }
-.add-relation select { padding:10px; border-radius:8px; border:1px solid #dfe7e1; background:#fbfffb }
+.add-relation select {
+	padding:10px;
+	border-radius:8px;
+	border:1px solid #dfe7e1;
+	background:#fbfffb;
+	min-width: 0;
+	width: 100%;
+}
+.add-relation .add-actions {
+	grid-column: 1 / span 3;
+	display: flex;
+	justify-content: flex-end;
+}
 .btn-add { background:#06784f; color:white; padding:10px 12px; border-radius:8px; border:none; cursor:pointer; font-weight:700 }
 
 .note { margin-top:10px; color:#6b6b6b }
