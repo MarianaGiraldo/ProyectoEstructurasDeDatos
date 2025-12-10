@@ -126,17 +126,6 @@ function Home() {
 
       <div className="vert_cont">
         <div className="vert_cont left">
-          <div className="plans_header">
-            <h2>Planes de estudio disponibles</h2>
-            <button
-              className="btn-crear-plan"
-              onClick={() => setShowCreateForm(!showCreateForm)}
-              title="Crear nuevo plan de estudios"
-            >
-              <TbPlus size={20} /> Crear nuevo plan de estudios
-            </button>
-          </div>
-
           {showCreateForm && (
             <div className="create-plan-form">
               <h3>Crear Nuevo Plan</h3>
@@ -177,6 +166,11 @@ function Home() {
                   >
                     <div className="plan-header">
                       <h3>{plan.nombre}</h3>
+                    </div>
+                    <div className="plan-credits">
+                      <strong>Créditos:</strong>{" "}
+                      {creditosPorPlan[plan.id] ?? creditosPorPlan[plan.nombre] ?? 0}
+                    </div>
                       <div className="plan-actions">
                         <span className="plan-code">{plan.codigo || plan.id}</span>
                         <button
@@ -188,17 +182,19 @@ function Home() {
                         >
                           Ver resumen
                         </button>
-                      </div>
-                    </div>
-                    <div className="plan-credits">
-                      <strong>Créditos:</strong>{" "}
-                      {creditosPorPlan[plan.id] ?? creditosPorPlan[plan.nombre] ?? 0}
-                    </div>
+                      </div>                   
                   </div>
                 ))
               ) : (
                 <div className="no-results">No se encontraron planes</div>
               )}
+              <button
+                className="btn-crear-plan"
+                onClick={() => setShowCreateForm(!showCreateForm)}
+                title="Crear nuevo plan de estudios"
+              >
+                <TbPlus size={20} /> Crear nuevo plan de estudios
+              </button>
             </div>
           )}
         </div>
