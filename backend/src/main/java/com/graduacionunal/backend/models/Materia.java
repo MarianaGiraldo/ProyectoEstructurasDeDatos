@@ -10,6 +10,7 @@ public class Materia {
 
     //Campos de la tabla
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idMateria", nullable = false)
     private Integer idMateria;
 

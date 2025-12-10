@@ -39,6 +39,7 @@ public interface PlanEstudioRepository extends JpaRepository<PlanEstudio, Intege
      */
     @Query("""
             SELECT new com.graduacionunal.backend.dto.MateriaDTO(
+                m.idMateria,
                 m.nomMateria,
                 m.numCreditos
             )
